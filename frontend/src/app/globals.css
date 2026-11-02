@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Super Trading System — design tokens
+   Dark trading-terminal palette: near-black surfaces, charcoal panels,
+   a single green signal accent, muted grey typography.
+------------------------------------------------------------------ */
+@theme {
+  --color-terminal-950: #04070a;
+  --color-terminal-900: #070b10;
+  --color-terminal-850: #0a1016;
+  --color-terminal-800: #0d141b;
+  --color-terminal-750: #111a22;
+  --color-terminal-700: #16212b;
+
+  --color-line: #1a2530;
+  --color-line-strong: #27343f;
+
+  --color-mist-100: #eef3f8;
+  --color-mist-200: #dbe4ee;
+  --color-mist-300: #bcc8d5;
+  --color-mist-400: #93a1b0;
+  --color-mist-500: #71808f;
+  --color-mist-600: #55636f;
+
+  --color-signal-200: #b6f7cd;
+  --color-signal-300: #7bf3a8;
+  --color-signal-400: #45e98a;
+  --color-signal-500: #22d46b;
+  --color-signal-600: #16a75a;
+  --color-signal-950: #06251a;
+
+  --color-loss-300: #ffa4a8;
+  --color-loss-400: #ff7378;
+  --color-loss-500: #ef4b53;
+  --color-loss-950: #2a0f13;
+
+  --font-sans:
+    var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, "Cascadia Mono", "SFMono-Regular",
+    Consolas, "Liberation Mono", monospace;
+
+  --animate-ticker: ticker 48s linear infinite;
+  --animate-rise: rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-blink: blink 2.4s ease-in-out infinite;
+}
+
+@keyframes ticker {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-terminal-950);
+    color: var(--color-mist-100);
+    font-family: var(--font-sans);
+    background-image:
+      radial-gradient(
+        58rem 32rem at 50% -12%,
+        rgb(34 212 107 / 0.09),
+        transparent 62%
+      ),
+      radial-gradient(
+        40rem 26rem at 92% 8%,
+        rgb(34 212 107 / 0.05),
+        transparent 60%
+      );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background-color: rgb(34 212 107 / 0.28);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal-400);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--color-terminal-950);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-terminal-700);
+    border-radius: 9999px;
+    border: 2px solid var(--color-terminal-950);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-line-strong);
+  }
+}
+
+@layer components {
+  /* Page gutter + max width, shared by every section */
+  .shell {
+    @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Charcoal card surface used across the site */
+  .panel {
+    @apply rounded-xl border border-line bg-terminal-900/70;
+  }
+
+  .panel-hover {
+    @apply transition-colors duration-200 hover:border-line-strong hover:bg-terminal-850/80;
+  }
+
+  .eyebrow {
+    @apply font-mono text-[0.68rem] font-medium tracking-[0.22em] text-signal-400 uppercase;
+  }
+
+  .section-title {
+    @apply text-2xl font-semibold text-mist-100 sm:text-3xl;
+  }
+
+  .section-lead {
+    @apply max-w-2xl text-sm leading-relaxed text-mist-400 sm:text-[0.95rem];
+  }
+
+  /* Buttons ------------------------------------------------------- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-55;
+  }
+
+  .btn-primary {
+    @apply bg-signal-500 text-terminal-950 hover:bg-signal-400 active:bg-signal-600;
+  }
+
+  .btn-outline {
+    @apply border border-line-strong bg-terminal-850/60 text-mist-100 hover:border-signal-600/70 hover:text-signal-300;
+  }
+
+  .btn-ghost {
+    @apply text-mist-300 hover:bg-terminal-800 hover:text-mist-100;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+
+  /* Forms --------------------------------------------------------- */
+  .field-label {
+    @apply mb-1.5 block text-xs font-semibold tracking-wide text-mist-300;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-line bg-terminal-950/80 px-3.5 py-2.5 text-sm text-mist-100 placeholder:text-mist-600 transition-colors outline-none focus:border-signal-500/70 focus:ring-2 focus:ring-signal-500/20;
+  }
+
+  .input-invalid {
+    @apply border-loss-500/70 focus:border-loss-400 focus:ring-loss-500/20;
+  }
+
+  .field-error {
+    @apply mt-1.5 flex items-start gap-1.5 text-xs text-loss-300;
+  }
+
+  /* Small status pills -------------------------------------------- */
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[0.65rem] font-medium tracking-wider uppercase;
+  }
+
+  .badge-demo {
+    @apply border-signal-600/40 bg-signal-950/70 text-signal-300;
+  }
+
+  .badge-neutral {
+    @apply border-line bg-terminal-800 text-mist-400;
+  }
+
+  .mono-num {
+    @apply font-mono tabular-nums;
+  }
+
+  /* Faint grid backdrop for hero / empty states */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(26 37 48 / 0.55) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(26 37 48 / 0.55) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
