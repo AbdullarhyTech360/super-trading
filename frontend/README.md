@@ -1,4 +1,4 @@
-# Frontend — Super Trading System
+# Frontend — Super Trading
 
 Next.js 16 App Router application with TypeScript and Tailwind CSS v4.
 
@@ -15,35 +15,52 @@ npm run lint    # ESLint (flat config)
 
 | Path | Purpose |
 | --- | --- |
-| `src/app/` | Routes and the root layout (header, footer, demo banner, metadata) |
-| `src/app/globals.css` | Design tokens (`@theme`) plus shared primitives (`.panel`, `.btn`, `.input`, `.badge`) |
-| `src/components/layout/` | Header, footer, logo, site-wide demo notice |
-| `src/components/home/` | Hero, ticker, market cards, sparkline, candlestick chart, features |
-| `src/components/about/` | Mission/vision, capabilities, roadmap, disclaimer |
+| `src/app/` | Routes and the root layout (theme script, header, footer, metadata) |
+| `src/app/globals.css` | Both palettes, `@theme` tokens, shared primitives (`.panel`, `.btn`, `.input`, `.label-mono`) |
+| `src/components/layout/` | Header, footer, logo, theme toggle |
+| `src/components/home/` | Hero, ticker, market tape, sparkline, candlestick chart, platform notes |
+| `src/components/about/` | Mission/vision, capabilities, disclaimer |
 | `src/components/contact/` | Validated contact form and contact details |
 | `src/components/chat/` | Chat shell, conversation list, transcript, composer, empty state |
-| `src/components/ui/` | Icons, demo badge, trend pill, section heading |
-| `src/data/` | `market-demo.ts` (simulated snapshot) and `chat-demo.ts` (fictional conversations) |
+| `src/components/ui/` | Icons, trend pill, section heading |
+| `src/data/` | `market-data.ts` (the session snapshot) and `chat-data.ts` (seed threads + reply pools) |
 | `src/lib/` | Market generator, formatters, contact validation, navigation helpers |
-| `src/hooks/` | `useDemoChat` — local chat state |
+| `src/hooks/` | `useChatSession` — browser chat state with simulated replies |
 | `src/types/` | Shared market and chat types |
 
-## How the demo data works
+## Theme
+
+Two complete palettes live in `globals.css`: the default warm near-black, and
+`[data-theme="light"]`. Every utility reads a token, so switching the
+`data-theme` attribute on `<html>` repaints the site without a separate
+stylesheet. `ThemeToggle` only flips that attribute and stores the choice in
+`localStorage`; the inline script in `app/layout.tsx` applies it before first
+paint so there is no flash.
+
+Type: **Fraunces** for display, **Instrument Sans** for interface, **IBM Plex
+Mono** for anything numeric.
+
+## How the market data works
 
 `src/lib/market.ts` builds every candle with a seeded PRNG and a fixed UTC
 anchor, so the series is deterministic: the server and the browser render the
 same numbers, and a refresh never changes the chart. Nothing calls a network
-endpoint. When the backend serves real data, replace `src/data/market-demo.ts`
+endpoint. When the backend serves real data, replace `src/data/market-data.ts`
 with a fetch and keep the `ForexPair` type.
 
-Chat data is plain seed data in `src/data/chat-demo.ts`. `useDemoChat` keeps
-messages in React state only, which is why a refresh resets the transcript.
+## How the chat works
+
+`src/data/chat-data.ts` holds six seed threads, each with a `replies` pool.
+`useChatSession` appends your message immediately, then shows a typing state and
+delivers a reply from that pool after a short pause. Everything lives in React
+state, which is why a refresh restores the original transcript.
 
 ## Conventions
 
 - Server components by default; `"use client"` only where state or pointer
-  events are needed (`Header`, `PriceChart`, `ContactForm`, chat components).
+  events are needed (`Header`, `ThemeToggle`, `PriceChart`, `ContactForm`, chat).
 - Dates are formatted in UTC with an explicit locale to avoid hydration
   mismatches.
-- All simulated values must sit next to a `DemoBadge` or an explicit note.
 - Styling uses the tokens in `globals.css`; avoid raw hex values in components.
+- Corners are square (`rounded-[2px]` at most). Surfaces are hairline borders
+  rather than floating cards.

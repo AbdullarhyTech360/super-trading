@@ -1,24 +1,16 @@
-import { AlertCircle, Info } from "@/components/ui/Icons";
-
-const SIMULATED = [
-  "Forex prices, candles, ranges, and percentage changes are generated locally from a fixed seed.",
-  "Chat participants, message bodies, and timestamps are fictional.",
-  "Contact submissions validate in the browser and are never transmitted or stored.",
-];
-
-const NOT_INCLUDED = [
-  "Live or delayed market data and any licensed feed.",
-  "Trading execution, brokerage integration, or payment processing.",
-  "User accounts, authentication, or persistent chat history.",
-  "Email delivery from the contact form.",
-];
-
-const TO_CONFIRM = [
-  "Official company description, branding assets, and legal entity details.",
-  "Final contact email, phone number, and office address.",
-  "Whether chat is for customer support, trader-to-trader messaging, or both.",
-  "Market-data provider, access restrictions, and licensing.",
-  "Whether accounts are needed, plus hosting and deployment preferences.",
+const ITEMS = [
+  {
+    title: "Prices are illustrative",
+    body: "Every quote, candle, range, and percentage on this site is generated in the browser from a fixed seed. None of it comes from a market feed, and none of it should be traded on.",
+  },
+  {
+    title: "Chat stays in this tab",
+    body: "Threads, participants, and their replies are written into the build. Anything you send is simulated locally and is never transmitted or stored.",
+  },
+  {
+    title: "Company details are provisional",
+    body: "Registered name, address, and contact route are placeholders until official information is supplied. Nothing here is a service offer.",
+  },
 ];
 
 export function DisclaimerPanel() {
@@ -28,85 +20,35 @@ export function DisclaimerPanel() {
       aria-labelledby="disclaimer-title"
       className="scroll-mt-24 pt-14 sm:pt-16"
     >
-      <div className="panel overflow-hidden">
-        <div className="flex items-start gap-3 border-b border-line bg-signal-950/40 px-5 py-4">
-          <AlertCircle className="mt-0.5 h-4 w-4 text-signal-400" />
-          <div>
-            <h2
-              id="disclaimer-title"
-              className="text-sm font-semibold text-signal-200"
-            >
-              This build is a demonstration
-            </h2>
-            <p className="mt-1 text-[0.8rem] leading-relaxed text-signal-200/75">
-              Nothing here is a market feed, a service offer, or investment
-              advice. Company details are placeholders until official
-              information is supplied.
-            </p>
-          </div>
+      <div className="border-t border-line pt-8">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+          <h2
+            id="disclaimer-title"
+            className="font-display text-base font-semibold text-mist-100"
+          >
+            Where this stands
+          </h2>
+          <p className="label-mono">Read before trading</p>
         </div>
 
-        <div className="grid gap-6 px-5 py-5 sm:grid-cols-2 lg:grid-cols-3">
-          <div>
-            <h3 className="font-mono text-[0.6rem] tracking-[0.2em] text-mist-500 uppercase">
-              Simulated
-            </h3>
-            <ul className="mt-3 space-y-2">
-              {SIMULATED.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-2 text-[0.8rem] leading-relaxed text-mist-400"
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-signal-500/70" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-mono text-[0.6rem] tracking-[0.2em] text-mist-500 uppercase">
-              Not included yet
-            </h3>
-            <ul className="mt-3 space-y-2">
-              {NOT_INCLUDED.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-2 text-[0.8rem] leading-relaxed text-mist-400"
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-mist-600" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-mono text-[0.6rem] tracking-[0.2em] text-mist-500 uppercase">
-              To confirm before launch
-            </h3>
-            <ul className="mt-3 space-y-2">
-              {TO_CONFIRM.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-2 text-[0.8rem] leading-relaxed text-mist-400"
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-mist-600" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="mt-6 grid gap-6 sm:grid-cols-3 sm:gap-8">
+          {ITEMS.map((item) => (
+            <div key={item.title}>
+              <h3 className="text-[0.85rem] font-semibold text-mist-200">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-[0.82rem] leading-relaxed text-mist-400">
+                {item.body}
+              </p>
+            </div>
+          ))}
         </div>
 
-        <div className="flex items-start gap-2 border-t border-line px-5 py-4">
-          <Info className="mt-0.5 h-3.5 w-3.5 text-mist-600" />
-          <p className="text-[0.72rem] leading-relaxed text-mist-500">
-            Trading foreign exchange carries a high level of risk and may not be
-            suitable for every investor. This site does not provide financial
-            advice.
-          </p>
-        </div>
+        <p className="mt-8 max-w-3xl border-t border-line pt-5 text-[0.72rem] leading-relaxed text-mist-500">
+          Trading foreign exchange on margin carries a high level of risk and may
+          not be suitable for every investor. You could lose more than you
+          deposit. Super Trading does not provide financial advice.
+        </p>
       </div>
     </section>
   );

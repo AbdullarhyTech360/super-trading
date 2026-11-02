@@ -2,16 +2,11 @@ import { buildForexPair } from "@/lib/market";
 import type { ForexPair } from "@/types/market";
 
 /**
- * Simulated market snapshot.
+ * The session snapshot the whole site reads from.
  *
- * These prices are generated locally from a fixed seed. They are NOT live,
- * delayed, or exchange-derived quotes and must never be presented as such.
+ * Prices are generated locally from a fixed seed. They are NOT live, delayed,
+ * or exchange-derived quotes and must never be presented as such.
  */
-export const DEMO_SNAPSHOT_LABEL = "Session snapshot · 20:00 UTC";
-
-export const DEMO_DATA_NOTICE =
-  "All prices, candles, and changes on this site are simulated demo data. They are not live market quotes.";
-
 const PAIR_CONFIGS = [
   {
     id: "eurusd",
@@ -75,7 +70,7 @@ const PAIR_CONFIGS = [
   },
 ];
 
-export const demoPairs: ForexPair[] = PAIR_CONFIGS.map(buildForexPair);
+export const marketPairs: ForexPair[] = PAIR_CONFIGS.map(buildForexPair);
 
 /** The pair the homepage chart opens on. */
-export const featuredPair: ForexPair = demoPairs[0];
+export const featuredPair: ForexPair = marketPairs[0];

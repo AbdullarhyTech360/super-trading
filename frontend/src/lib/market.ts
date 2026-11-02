@@ -32,7 +32,7 @@ const TIMEFRAME_VOLATILITY_SCALE: Record<Timeframe, number> = {
   "1D": 3.2,
 };
 
-/** Small deterministic PRNG (mulberry32) so demo charts never reshuffle. */
+/** Small deterministic PRNG (mulberry32) so a series never reshuffles. */
 function mulberry32(seed: number): () => number {
   let state = seed >>> 0;
   return () => {

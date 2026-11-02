@@ -48,6 +48,28 @@ export function ArrowUpRight(props: IconProps) {
   );
 }
 
+export function Expand(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 9V4h5" />
+      <path d="M20 15v5h-5" />
+      <path d="M15 4h5v5" />
+      <path d="M9 20H4v-5" />
+    </Icon>
+  );
+}
+
+export function Collapse(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M9 4v5H4" />
+      <path d="M15 20v-5h5" />
+      <path d="M20 9h-5V4" />
+      <path d="M4 15h5v5" />
+    </Icon>
+  );
+}
+
 export function ArrowUp(props: IconProps) {
   return (
     <Icon {...props}>
@@ -252,6 +274,32 @@ export function Info(props: IconProps) {
       <circle cx="12" cy="12" r="8.5" />
       <path d="M12 11v5.5" />
       <path d="M12 7.8v.3" />
+    </Icon>
+  );
+}
+
+export function Sun(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2.8v2.1M12 19.1v2.1M2.8 12h2.1M19.1 12h2.1" />
+      <path d="M5.5 5.5l1.5 1.5M17 17l1.5 1.5M18.5 5.5 17 7M7 17l-1.5 1.5" />
+    </Icon>
+  );
+}
+
+export function Moon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M20 14.4A8.2 8.2 0 0 1 9.6 4a8.4 8.4 0 1 0 10.4 10.4Z" />
+    </Icon>
+  );
+}
+
+export function Paperclip(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M20.4 11.5 12 19.9a5 5 0 0 1-7.1-7.1l8.5-8.5a3.4 3.4 0 0 1 4.8 4.8l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4l7.6-7.6" />
     </Icon>
   );
 }

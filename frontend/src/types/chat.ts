@@ -1,6 +1,6 @@
 /**
- * Types for the `/chat` demo. The backend will eventually replace the seed
- * data in `src/data/chat-demo.ts` with persisted conversations.
+ * Types for the `/chat` route. The backend will eventually replace the seed
+ * data in `src/data/chat-data.ts` with persisted conversations.
  */
 
 export type MessageAuthor = "me" | "them";
@@ -16,7 +16,7 @@ export interface ChatMessage {
 export interface ChatParticipant {
   /** Palette index for the initials avatar (0-5). */
   avatarTone: number;
-  /** Fictional role line, e.g. "Prop desk · London". */
+  /** Role line, e.g. "Prop desk · Stockholm". */
   role: string;
 }
 
@@ -26,4 +26,6 @@ export interface Conversation extends ChatParticipant {
   initials: string;
   unread: number;
   messages: ChatMessage[];
+  /** Canned responses used by the simulated reply loop, in order. */
+  replies: string[];
 }

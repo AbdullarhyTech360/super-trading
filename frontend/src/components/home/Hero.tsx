@@ -1,16 +1,7 @@
 import Link from "next/link";
 import { Sparkline } from "@/components/home/Sparkline";
-import { DemoBadge } from "@/components/ui/DemoBadge";
 import { TrendPill } from "@/components/ui/TrendPill";
-import {
-  ArrowRight,
-  Candles,
-  Check,
-  Chat,
-  ShieldCheck,
-  Devices,
-} from "@/components/ui/Icons";
-import { DEMO_SNAPSHOT_LABEL } from "@/data/market-demo";
+import { ArrowRight, Chat } from "@/components/ui/Icons";
 import { closesOf } from "@/lib/market";
 import { formatPercent, formatPrice, formatSpread, trendOf } from "@/lib/format";
 import type { ForexPair } from "@/types/market";
@@ -19,10 +10,10 @@ interface HeroProps {
   pairs: ForexPair[];
 }
 
-const GUARANTEES = [
-  { icon: ShieldCheck, label: "Demo data clearly labelled" },
-  { icon: Candles, label: "Candlestick detail on every pair" },
-  { icon: Devices, label: "Built for phone, tablet, and desk" },
+const NOTES = [
+  { value: "06", label: "pairs followed" },
+  { value: "3", label: "timeframes" },
+  { value: "0", label: "accounts needed" },
 ];
 
 export function Hero({ pairs }: HeroProps) {
@@ -32,103 +23,97 @@ export function Hero({ pairs }: HeroProps) {
     <section className="relative overflow-hidden">
       <div
         aria-hidden="true"
-        className="bg-grid pointer-events-none absolute inset-0 opacity-[0.14] [mask-image:radial-gradient(65%_55%_at_50%_25%,black,transparent)]"
+        className="bg-grid pointer-events-none absolute inset-0 opacity-[0.16] [mask-image:linear-gradient(to_bottom,black,transparent_78%)]"
       />
 
-      <div className="shell relative grid gap-12 py-12 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-10 lg:py-20">
+      <div className="shell relative grid gap-14 pt-14 pb-4 sm:pt-20 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-12">
         <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <DemoBadge label="Frontend demo" />
-            <span className="badge badge-neutral">No account needed</span>
-          </div>
+          <p className="eyebrow">Forex market workspace</p>
 
-          <h1 className="mt-5 text-[2.15rem] leading-[1.08] font-semibold tracking-tight text-mist-100 sm:text-5xl lg:text-[3.35rem]">
-            A trading terminal built for a clearer read on the session.
+          <h1 className="mt-5 max-w-[15ch] text-[2.5rem] leading-[0.98] font-semibold text-mist-100 sm:text-[3.6rem] lg:text-[4.1rem]">
+            Read the session,
+            <br />
+            <span className="italic text-signal-300">not the noise.</span>
           </h1>
 
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-mist-400 sm:text-base">
-            Super Trading System pairs a dark, low-noise interface with pair
-            overviews, candlestick detail, and a direct line to the team.
-            Everything you see is clearly labelled demo data — no account, no
-            noise, no implied performance.
+          <p className="mt-6 max-w-lg text-[0.95rem] leading-relaxed text-mist-400">
+            A quiet terminal for following currency pairs: candlestick detail,
+            ranges and spreads in one place, and a direct line to the desk.
+            Nothing here asks for a login or promises a return.
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Link href="#chart" className="btn btn-primary px-5 py-3">
-              Explore the demo chart
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Link href="#chart" className="btn btn-primary px-6 py-3">
+              Open the chart
               <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/chat" className="btn btn-outline px-5 py-3">
+            <Link href="/chat" className="btn btn-outline px-6 py-3">
               <Chat className="h-4 w-4" />
-              Open the chat demo
+              Talk to the desk
             </Link>
           </div>
 
-          <ul className="mt-8 grid gap-2.5 text-sm text-mist-300 sm:grid-cols-2 lg:grid-cols-1">
-            {GUARANTEES.map((item) => (
-              <li key={item.label} className="flex items-center gap-2.5">
-                <span className="flex h-6 w-6 items-center justify-center rounded-md border border-signal-600/25 bg-signal-950/60">
-                  <item.icon className="h-3.5 w-3.5 text-signal-400" />
-                </span>
-                {item.label}
-              </li>
+          <dl className="mt-12 grid max-w-lg grid-cols-3 border-t border-line">
+            {NOTES.map((note) => (
+              <div key={note.label} className="border-r border-line py-4 pr-3 last:border-r-0">
+                <dt className="mono-num text-xl leading-none font-medium text-mist-100">
+                  {note.value}
+                </dt>
+                <dd className="mt-1.5 text-[0.7rem] leading-snug text-mist-500">
+                  {note.label}
+                </dd>
+              </div>
             ))}
-          </ul>
+          </dl>
         </div>
 
-        <div className="relative">
-          <div
-            aria-hidden="true"
-            className="absolute -inset-5 rounded-[2rem] bg-signal-500/[0.07] blur-2xl"
-          />
+        <div>
+          <p className="label-mono mb-3">Latest close · session snapshot</p>
 
-          <div className="panel relative overflow-hidden shadow-2xl shadow-black/50">
-            <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
-              <div className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 animate-blink rounded-full bg-signal-400" />
-                <span className="font-mono text-xs font-medium tracking-wide text-mist-200">
-                  {primary.symbol}
-                </span>
-              </div>
-              <DemoBadge label="Demo feed" />
+          <div className="panel">
+            <div className="flex items-baseline justify-between gap-3 border-b border-line px-4 py-2.5">
+              <span className="font-mono text-xs font-medium tracking-wide text-mist-200">
+                {primary.symbol}
+              </span>
+              <span className="font-mono text-[0.6rem] tracking-[0.18em] text-mist-600 uppercase">
+                Simulated
+              </span>
             </div>
 
-            <div className="px-4 pt-5 pb-4">
+            <div className="px-4 pt-4 pb-4">
               <div className="flex flex-wrap items-end justify-between gap-3">
-                <p className="mono-num text-3xl font-semibold text-mist-100 sm:text-4xl">
+                <p className="mono-num text-[2rem] leading-none font-medium text-mist-100 sm:text-4xl">
                   {formatPrice(primary.price, primary.digits)}
                 </p>
                 <TrendPill percent={primary.changePercent} />
               </div>
-              <p className="mt-1.5 text-[0.7rem] text-mist-500">
-                {primary.name} · {DEMO_SNAPSHOT_LABEL}
-              </p>
+              <p className="mt-2 text-[0.72rem] text-mist-500">{primary.name}</p>
 
               <Sparkline
                 values={closesOf(primary.series["1H"]).slice(-30)}
                 id={`hero-${primary.id}`}
-                className="mt-5 h-24 w-full sm:h-28"
+                className="mt-4 h-24 w-full sm:h-28"
               />
 
-              <dl className="mt-5 grid grid-cols-3 gap-2 border-t border-line/80 pt-3.5">
+              <dl className="mt-4 grid grid-cols-3 border-t border-line pt-3">
                 <div>
-                  <dt className="font-mono text-[0.55rem] tracking-wider text-mist-600 uppercase">
+                  <dt className="font-mono text-[0.55rem] tracking-[0.16em] text-mist-600 uppercase">
                     24h low
                   </dt>
                   <dd className="mono-num mt-1 text-xs text-mist-300">
                     {formatPrice(primary.low24h, primary.digits)}
                   </dd>
                 </div>
-                <div>
-                  <dt className="font-mono text-[0.55rem] tracking-wider text-mist-600 uppercase">
+                <div className="border-l border-line pl-3">
+                  <dt className="font-mono text-[0.55rem] tracking-[0.16em] text-mist-600 uppercase">
                     24h high
                   </dt>
                   <dd className="mono-num mt-1 text-xs text-mist-300">
                     {formatPrice(primary.high24h, primary.digits)}
                   </dd>
                 </div>
-                <div>
-                  <dt className="font-mono text-[0.55rem] tracking-wider text-mist-600 uppercase">
+                <div className="border-l border-line pl-3">
+                  <dt className="font-mono text-[0.55rem] tracking-[0.16em] text-mist-600 uppercase">
                     Spread
                   </dt>
                   <dd className="mono-num mt-1 text-xs text-mist-300">
@@ -139,13 +124,19 @@ export function Hero({ pairs }: HeroProps) {
             </div>
           </div>
 
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            {[secondary, tertiary].map((pair) => (
-              <div key={pair.id} className="panel px-3.5 py-3">
+          <div className="mt-3 grid grid-cols-2 border border-line">
+            {[secondary, tertiary].map((pair, index) => (
+              <div
+                key={pair.id}
+                className={[
+                  "px-3.5 py-3",
+                  index === 0 ? "border-r border-line" : "",
+                ].join(" ")}
+              >
                 <p className="font-mono text-[0.65rem] tracking-wide text-mist-400">
                   {pair.symbol}
                 </p>
-                <p className="mono-num mt-1.5 text-base font-semibold text-mist-100">
+                <p className="mono-num mt-1.5 text-base font-medium text-mist-100">
                   {formatPrice(pair.price, pair.digits)}
                 </p>
                 <p
@@ -161,11 +152,6 @@ export function Hero({ pairs }: HeroProps) {
               </div>
             ))}
           </div>
-
-          <p className="mt-4 flex items-center gap-1.5 text-[0.65rem] text-mist-600">
-            <Check className="h-3 w-3 text-signal-600" />
-            Snapshot generated from a fixed seed for demonstration.
-          </p>
         </div>
       </div>
     </section>

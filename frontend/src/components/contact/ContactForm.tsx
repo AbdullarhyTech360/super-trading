@@ -96,14 +96,14 @@ export function ContactForm() {
           Message accepted
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-mist-400">
-          Thanks, {values.name.trim()}. Your enquiry about{" "}
-          <span className="text-mist-200">{values.subject.toLowerCase()}</span>{" "}
-          passed validation and the form returned this state.
+          Thanks, {values.name.trim()}. Your message under{" "}
+          <span className="text-mist-200">“{values.subject}”</span> passed
+          validation and the form returned this state.
         </p>
 
-        <div className="mt-4 rounded-lg border border-signal-600/25 bg-terminal-950/40 px-4 py-3">
+        <div className="mt-4 rounded-[2px] border border-signal-600/25 bg-terminal-950/40 px-4 py-3">
           <p className="font-mono text-[0.62rem] tracking-[0.18em] text-signal-300 uppercase">
-            Demo only
+            Not delivered
           </p>
           <p className="mt-1.5 text-[0.8rem] leading-relaxed text-mist-400">
             Nothing was emailed, queued, or stored. Email delivery arrives with
@@ -143,13 +143,13 @@ export function ContactForm() {
             Fields marked with an asterisk are required.
           </p>
         </div>
-        <span className="badge badge-demo">Simulated</span>
+        <span className="label-mono">Validated in browser</span>
       </div>
 
       {hasErrors(errors) ? (
         <div
           role="alert"
-          className="mt-5 flex items-start gap-2.5 rounded-lg border border-loss-500/40 bg-loss-950/40 px-3.5 py-3"
+          className="mt-5 flex items-start gap-2.5 rounded-[2px] border border-loss-500/40 bg-loss-950/40 px-3.5 py-3"
         >
           <AlertCircle className="mt-0.5 h-4 w-4 text-loss-300" />
           <p className="text-xs leading-relaxed text-loss-300">

@@ -1,43 +1,29 @@
-import {
-  Candles,
-  Code,
-  Devices,
-  Layers,
-  ShieldCheck,
-  Sparkles,
-} from "@/components/ui/Icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 const FEATURES = [
   {
-    icon: Candles,
     title: "Candlestick detail",
-    body: "Bullish and bearish bodies, wicks, grid lines, and a last-price marker on one responsive canvas.",
+    body: "Bodies, wicks, grid lines, and a last-price marker drawn on one canvas that resizes with the panel.",
   },
   {
-    icon: Sparkles,
-    title: "One visual language",
-    body: "Near-black surfaces, charcoal panels, and a single green accent keep attention on the numbers.",
+    title: "Context before opinion",
+    body: "Price, 24-hour range, and spread sit together on every pair, so the number arrives with its boundaries.",
   },
   {
-    icon: Devices,
     title: "Readable at every size",
-    body: "Axis labels sit outside the canvas and controls wrap, so prices stay legible from 360px upward.",
+    body: "Axis labels live outside the canvas and the controls wrap, keeping prices legible from 360px upward.",
   },
   {
-    icon: ShieldCheck,
-    title: "Demo-first honesty",
-    body: "Every simulated price, change, and conversation is labelled. No implied performance, ever.",
+    title: "One visual language",
+    body: "Warm near-black surfaces, hairline rules, and a single green accent. Type stays out of the way of data.",
   },
   {
-    icon: Layers,
-    title: "Reusable components",
-    body: "Cards, badges, headings, and form fields are shared primitives rather than one-off markup.",
+    title: "Keyboard and screen reader paths",
+    body: "Skip links, labelled controls, visible focus, and a table view of the last eight candles for the chart.",
   },
   {
-    icon: Code,
-    title: "Backend-ready structure",
-    body: "Typed frontend today; a FastAPI and SQLModel skeleton is scaffolded for the next phase.",
+    title: "Written plainly",
+    body: "No return promises, no jargon, and no implied performance. What this site does is stated in the header.",
   },
 ];
 
@@ -46,35 +32,35 @@ export function FeatureGrid() {
     <section
       id="features"
       aria-labelledby="features-title"
-      className="shell scroll-mt-24 pt-16 sm:pt-20"
+      className="shell scroll-mt-24 pt-20 sm:pt-24"
     >
       <SectionHeading
         id="features-title"
-        eyebrow="Built with intent"
+        eyebrow="03 — Platform"
         title="What the first release focuses on"
-        description="A small number of things done properly: legible market context, an honest demo experience, and a structure the backend can grow into."
+        description="A short list, done properly: legible market context, an interface that respects attention, and a structure the backend can grow into."
       />
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {FEATURES.map((feature) => (
-          <article key={feature.title} className="panel panel-hover p-5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-signal-600/25 bg-signal-950/60">
-              <feature.icon className="h-4 w-4 text-signal-400" />
-            </span>
-            <h3 className="mt-4 text-sm font-semibold text-mist-100">
-              {feature.title}
-            </h3>
-            <p className="mt-2 text-[0.82rem] leading-relaxed text-mist-400">
+      <div className="mt-10 grid border-t border-line sm:grid-cols-2">
+        {FEATURES.map((feature, index) => (
+          <article
+            key={feature.title}
+            className="border-b border-line py-6 sm:odd:border-r sm:odd:pr-8 sm:even:pl-8"
+          >
+            <div className="flex items-baseline gap-3">
+              <span className="font-mono text-[0.55rem] tracking-[0.22em] text-signal-300">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-display text-[1.05rem] font-semibold text-mist-100">
+                {feature.title}
+              </h3>
+            </div>
+            <p className="mt-2 max-w-md pl-8 text-[0.85rem] leading-relaxed text-mist-400">
               {feature.body}
             </p>
           </article>
         ))}
       </div>
-
-      <p className="mt-6 font-mono text-[0.68rem] tracking-wide text-mist-600">
-        Next.js · TypeScript · Tailwind CSS — backend scaffold: FastAPI ·
-        SQLModel · PostgreSQL
-      </p>
     </section>
   );
 }

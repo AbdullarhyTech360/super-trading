@@ -1,79 +1,79 @@
 import Link from "next/link";
-import { ArrowUpRight, Check } from "@/components/ui/Icons";
+import { ArrowUpRight } from "@/components/ui/Icons";
 
 const CAPABILITIES = [
   {
-    title: "Market overview at a glance",
-    body: "Six pairs with price, 24 hour range, spread, and a trend line — all from one simulated snapshot.",
+    title: "Market tape",
+    body: "Six pairs with last price, 24-hour range, spread, and where the current price sits inside that range.",
     href: "/#markets",
   },
   {
-    title: "Candlestick chart workspace",
-    body: "Switch pairs and timeframes, inspect each candle, and read the session statistics beside the chart.",
+    title: "Chart workspace",
+    body: "Switch pairs and timeframes, then inspect any candle for its open, high, low, and close.",
     href: "/#chart",
   },
   {
-    title: "Contact with real validation",
-    body: "Inline field errors, a summary alert, and a success state — with a clear note that delivery is simulated.",
+    title: "Contact, properly validated",
+    body: "Inline field errors, a summary alert, and a success state that names the subject you sent.",
     href: "/contact",
   },
   {
-    title: "Dedicated chat demo",
-    body: "A standalone route with fictional conversations, message history, and locally sent replies.",
+    title: "A desk you can write to",
+    body: "Threads with history, quick replies, and answers that arrive a moment later — all in this tab.",
     href: "/chat",
   },
 ];
 
 const BENEFITS = [
-  "No account, install, or paywall to explore the demo.",
-  "Consistent dark interface across all four pages.",
-  "Responsive from a 360px phone to a wide desktop.",
-  "Typed data models ready for an API layer.",
+  "No account, install, or paywall.",
+  "Light and dark, chosen by you and remembered.",
+  "Responsive from a 360px phone upward.",
+  "Typed models ready for an API layer.",
 ];
 
 export function CapabilityList() {
   return (
     <section aria-labelledby="capabilities-title" className="pt-14 sm:pt-16">
-      <p className="eyebrow">What is inside</p>
-      <h2 id="capabilities-title" className="section-title mt-2.5">
-        Key features and benefits
-      </h2>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="eyebrow">What is inside</p>
+          <h2 id="capabilities-title" className="section-title mt-2.5">
+            Four things it does well
+          </h2>
+        </div>
+        <p className="label-mono">Nothing beyond that</p>
+      </div>
 
-      <div className="mt-7 grid gap-4 lg:grid-cols-[1.35fr_1fr]">
-        <div className="grid gap-3 sm:grid-cols-2">
-          {CAPABILITIES.map((capability) => (
+      <ul className="mt-8 border-t border-line">
+        {CAPABILITIES.map((capability, index) => (
+          <li key={capability.title} className="border-b border-line">
             <Link
-              key={capability.title}
               href={capability.href}
-              className="panel panel-hover group flex flex-col p-5"
+              className="group grid gap-2 py-5 sm:grid-cols-[2.5rem_minmax(0,13rem)_minmax(0,1fr)_1.5rem] sm:items-baseline sm:gap-6"
             >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-sm font-semibold text-mist-100">
-                  {capability.title}
-                </h3>
-                <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-mist-600 transition-colors group-hover:text-signal-400" />
-              </div>
-              <p className="mt-2.5 text-[0.82rem] leading-relaxed text-mist-400">
+              <span className="font-mono text-[0.55rem] tracking-[0.22em] text-signal-300">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-display text-[1.05rem] font-semibold text-mist-100 transition-colors group-hover:text-signal-300">
+                {capability.title}
+              </h3>
+              <p className="max-w-xl text-[0.85rem] leading-relaxed text-mist-400">
                 {capability.body}
               </p>
+              <ArrowUpRight className="hidden h-4 w-4 text-mist-600 transition-colors group-hover:text-signal-400 sm:block" />
             </Link>
-          ))}
-        </div>
+          </li>
+        ))}
+      </ul>
 
-        <div className="rounded-xl border border-signal-600/25 bg-signal-950/30 p-5">
-          <h3 className="font-mono text-[0.62rem] tracking-[0.2em] text-signal-300 uppercase">
-            Benefits
-          </h3>
-          <ul className="mt-4 space-y-3">
-            {BENEFITS.map((benefit) => (
-              <li key={benefit} className="flex gap-2.5 text-[0.82rem] leading-relaxed text-mist-300">
-                <Check className="mt-0.5 h-3.5 w-3.5 text-signal-400" />
-                {benefit}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <dl className="mt-10 grid gap-x-10 gap-y-5 border-t border-line pt-6 sm:grid-cols-2">
+        {BENEFITS.map((benefit) => (
+          <div key={benefit} className="flex items-baseline gap-3">
+            <span aria-hidden="true" className="h-px w-4 shrink-0 translate-y-[-0.2rem] bg-signal-500" />
+            <dt className="text-[0.82rem] leading-relaxed text-mist-300">{benefit}</dt>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }

@@ -4,39 +4,32 @@ import { Hero } from "@/components/home/Hero";
 import { MarketOverview } from "@/components/home/MarketOverview";
 import { PriceChart } from "@/components/home/PriceChart";
 import { PriceTicker } from "@/components/home/PriceTicker";
-import { DemoBadge } from "@/components/ui/DemoBadge";
-import { Info } from "@/components/ui/Icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { DEMO_DATA_NOTICE, demoPairs, featuredPair } from "@/data/market-demo";
+import { featuredPair, marketPairs } from "@/data/market-data";
 
 export default function HomePage() {
   return (
     <>
-      <Hero pairs={demoPairs} />
-      <PriceTicker pairs={demoPairs} />
-      <MarketOverview pairs={demoPairs} />
+      <Hero pairs={marketPairs} />
+      <PriceTicker pairs={marketPairs} />
+      <MarketOverview pairs={marketPairs} />
 
       <section
         id="chart"
         aria-labelledby="chart-title"
-        className="shell scroll-mt-24 pt-16 sm:pt-20"
+        className="shell scroll-mt-24 pt-20 sm:pt-24"
       >
         <SectionHeading
           id="chart-title"
-          eyebrow="Chart workspace"
+          eyebrow="02 — Chart workspace"
           title="Candlesticks with the detail in reach"
-          description="Switch pairs and timeframes, then hover or tap any candle to read its open, high, low, and close. The series is generated from a fixed seed, so the chart is stable demo data — not a market feed."
-          action={<DemoBadge label="Simulated candles" />}
+          description="Switch pairs and timeframes, then hover or tap any candle to read its open, high, low and close. The series runs on a fixed seed, so it is stable between visits."
+          action={<span className="label-mono">Simulated series</span>}
         />
 
         <div className="mt-8">
-          <PriceChart pairs={demoPairs} defaultPairId={featuredPair.id} />
+          <PriceChart pairs={marketPairs} defaultPairId={featuredPair.id} />
         </div>
-
-        <p className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-mist-600">
-          <Info className="mt-0.5 h-3.5 w-3.5" />
-          {DEMO_DATA_NOTICE}
-        </p>
       </section>
 
       <FeatureGrid />

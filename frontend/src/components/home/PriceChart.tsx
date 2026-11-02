@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState, type PointerEvent as ReactPointerEvent } from "react";
-import { DemoBadge } from "@/components/ui/DemoBadge";
 import { TrendPill } from "@/components/ui/TrendPill";
 import {
   formatDay,
@@ -14,9 +13,11 @@ import {
 import { seriesChangePercent, TIMEFRAMES } from "@/lib/market";
 import type { Candle, ForexPair, Timeframe } from "@/types/market";
 
-const UP = "#22d46b";
-const DOWN = "#ef4b53";
-const GRID = "#182330";
+const UP = "var(--color-signal-400)";
+const DOWN = "var(--color-loss-400)";
+const GRID = "var(--color-line)";
+const HAIRLINE = "var(--color-mist-400)";
+const HOVER_TINT = "var(--color-mist-100)";
 
 const PLOT_HEIGHT = "h-[260px] sm:h-[320px] lg:h-[360px]";
 
@@ -42,7 +43,7 @@ function CandleReadout({
       : ((candle.close - previousClose) / previousClose) * 100;
 
   return (
-    <div className="pointer-events-none absolute top-2 left-2 z-10 flex max-w-[calc(100%-1rem)] flex-wrap items-center gap-x-3 gap-y-1 rounded-md border border-line/80 bg-terminal-950/85 px-2.5 py-1.5 font-mono text-[0.6rem] text-mist-500 backdrop-blur-sm sm:text-[0.68rem]">
+    <div className="pointer-events-none absolute top-2 left-2 z-10 flex max-w-[calc(100%-1rem)] flex-wrap items-center gap-x-3 gap-y-1 rounded-[2px] border border-line/80 bg-terminal-950/85 px-2.5 py-1.5 font-mono text-[0.6rem] text-mist-500 backdrop-blur-sm sm:text-[0.68rem]">
       <span className="text-mist-300">
         {timeframe === "1D" ? formatDay(candle.time) : formatTime(candle.time)}
       </span>
@@ -67,7 +68,7 @@ function CandleReadout({
 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-line/70 bg-terminal-950/50 px-3 py-2">
+    <div className="rounded-[2px] border border-line/70 bg-terminal-950/50 px-3 py-2">
       <dt className="font-mono text-[0.58rem] tracking-wider text-mist-600 uppercase">
         {label}
       </dt>
@@ -151,7 +152,7 @@ export function PriceChart({ pairs, defaultPairId }: PriceChartProps) {
                   setHovered(null);
                 }}
                 className={[
-                  "rounded-md px-2.5 py-1.5 font-mono text-xs font-medium transition-colors",
+                  "rounded-[2px] px-2.5 py-1.5 font-mono text-xs font-medium transition-colors",
                   selected
                     ? "bg-terminal-800 text-signal-300 ring-1 ring-signal-600/30 ring-inset"
                     : "text-mist-400 hover:bg-terminal-850 hover:text-mist-200",
@@ -164,11 +165,11 @@ export function PriceChart({ pairs, defaultPairId }: PriceChartProps) {
         </div>
 
         <div className="flex items-center justify-between gap-3">
-          <DemoBadge label="Simulated" />
+          <span className="label-mono">Simulated</span>
           <div
             role="group"
             aria-label="Select a timeframe"
-            className="inline-flex rounded-lg border border-line bg-terminal-950/70 p-0.5"
+            className="inline-flex rounded-[2px] border border-line bg-terminal-950/70 p-0.5"
           >
             {TIMEFRAMES.map((option) => {
               const selected = option === timeframe;
@@ -182,7 +183,7 @@ export function PriceChart({ pairs, defaultPairId }: PriceChartProps) {
                     setHovered(null);
                   }}
                   className={[
-                    "rounded-md px-2.5 py-1 font-mono text-[0.7rem] font-medium transition-colors",
+                    "rounded-[2px] px-2.5 py-1 font-mono text-[0.7rem] font-medium transition-colors",
                     selected
                       ? "bg-signal-500/15 text-signal-300"
                       : "text-mist-400 hover:text-mist-200",
@@ -243,7 +244,7 @@ export function PriceChart({ pairs, defaultPairId }: PriceChartProps) {
             <div className="min-w-0 flex-1">
               <div
                 role="img"
-                aria-label={`${pair.symbol} ${timeframe} candlestick chart built from simulated demo data. Hover or tap a candle to read its open, high, low, and close.`}
+                aria-label={`${pair.symbol} ${timeframe} candlestick chart built from simulated data. Hover or tap a candle to read its open, high, low, and close.`}
                 onPointerMove={onPointerMove}
                 onPointerDown={onPointerMove}
                 onPointerLeave={() => setHovered(null)}
@@ -296,15 +297,15 @@ export function PriceChart({ pairs, defaultPairId }: PriceChartProps) {
                         y={0}
                         width={band}
                         height={100}
-                        fill="#ffffff"
-                        opacity={0.035}
+                        fill={HOVER_TINT}
+                        opacity={0.05}
                       />
                       <line
                         x1={hovered * band + band / 2}
                         x2={hovered * band + band / 2}
                         y1={0}
                         y2={100}
-                        stroke="#93a1b0"
+                        stroke={HAIRLINE}
                         strokeWidth={1}
                         opacity={0.4}
                         vectorEffect="non-scaling-stroke"
@@ -420,7 +421,7 @@ export function PriceChart({ pairs, defaultPairId }: PriceChartProps) {
         </div>
 
         <aside className="hidden lg:block">
-          <div className="rounded-lg border border-line/70 bg-terminal-950/40 p-3.5">
+          <div className="rounded-[2px] border border-line/70 bg-terminal-950/40 p-3.5">
             <h3 className="font-mono text-[0.6rem] tracking-[0.2em] text-mist-500 uppercase">
               Session stats
             </h3>
@@ -448,7 +449,7 @@ export function PriceChart({ pairs, defaultPairId }: PriceChartProps) {
           <div className="mt-3 overflow-x-auto">
             <table className="w-full min-w-[28rem] text-left font-mono text-[0.68rem]">
               <caption className="sr-only">
-                Simulated {pair.symbol} {timeframe} candles, demo data only
+                Simulated {pair.symbol} {timeframe} candles, not live quotes
               </caption>
               <thead>
                 <tr className="text-mist-600">

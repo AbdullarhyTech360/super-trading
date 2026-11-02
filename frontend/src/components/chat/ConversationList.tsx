@@ -25,18 +25,16 @@ export function ConversationList({
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="border-b border-line px-3.5 py-3">
         <div className="flex items-center justify-between gap-2">
-          <h2 className="font-mono text-[0.62rem] tracking-[0.18em] text-mist-500 uppercase">
-            Demo inbox
-          </h2>
-          <span className="font-mono text-[0.6rem] text-mist-600">
-            {total} fictional
+          <h2 className="label-mono">Inbox</h2>
+          <span className="mono-num text-[0.6rem] text-mist-600">
+            {total} threads
           </span>
         </div>
 
         <div className="relative mt-3">
           <Search className="pointer-events-none absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2 text-mist-600" />
           <label htmlFor="chat-search" className="sr-only">
-            Search demo conversations
+            Search conversations
           </label>
           <input
             id="chat-search"
@@ -127,7 +125,7 @@ export function ConversationList({
       </div>
 
       <p className="border-t border-line px-3.5 py-2.5 text-[0.62rem] leading-relaxed text-mist-600">
-        Fictional participants. Nothing is sent.
+        Simulated replies · nothing leaves this tab
       </p>
     </div>
   );

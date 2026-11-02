@@ -1,9 +1,9 @@
 # Super Trading System
 
-A demo-first forex website with a dark trading-terminal interface: market
-overview, an interactive candlestick chart, company information, a validated
-contact form, and a standalone chat page. Every price and conversation is
-simulated and labelled as such.
+A forex workspace for reading a session: a tape of six pairs, an inspectable
+candlestick chart, company background, a validated contact form, and a chat
+route with simulated replies. Prices are generated in the browser from a fixed
+seed and are never presented as live quotes.
 
 **Live domain (planned):** super-trading.com
 **Status:** frontend complete, backend scaffolded, deployment pending.
@@ -12,7 +12,7 @@ simulated and labelled as such.
 
 - **Frontend:** Next.js 16 (App Router), TypeScript, Tailwind CSS v4
 - **Backend:** FastAPI + SQLModel (placeholder only, phase 7)
-- **Data:** simulated locally from a fixed seed — no market feed, no database
+- **Data:** one deterministic snapshot generated locally — no market feed, no database
 
 ## Quick start
 
@@ -38,10 +38,26 @@ uvicorn app.main:app --reload --port 8000
 
 | Route | What is there |
 | --- | --- |
-| `/` | Hero, simulated price ticker, six-pair market overview, interactive candlestick chart, feature highlights |
-| `/about` | Platform introduction, mission and vision, features, roadmap, full disclaimer |
-| `/contact` | Contact form with validation, error/success states, placeholder contact channels |
-| `/chat` | Demo chat workspace with six fictional conversations and local message sending |
+| `/` | Hero with a live-looking pair panel, ticker, six-pair market tape, interactive candlestick chart, platform notes |
+| `/about` | Company idea, mission and vision, four capabilities, disclosure of limits |
+| `/contact` | Contact form with validation, error and success states, contact details |
+| `/chat` | Chat workspace with six threads, typing indicator, simulated replies, and a full-screen mode |
+
+Every route carries a theme toggle in the header: light and dark, remembered
+between visits, applied before first paint.
+
+## Design language
+
+- **Palettes:** warm near-black "ember" by default, warm off-white "paper" in
+  light mode. Both are complete token sets, so no component is duplicated.
+- **Type:** Fraunces (display serif), Instrument Sans (interface), IBM Plex Mono
+  (anything numeric).
+- **Surfaces:** hairline rules instead of floating cards, square corners, a
+  single signal green as the only accent.
+- **Structure:** numbered section eyebrows, a tape rather than a grid of cards,
+  and a chart that keeps its readout inside the plot.
+
+Tokens live in [`frontend/src/app/globals.css`](frontend/src/app/globals.css).
 
 ## Repository layout
 
@@ -49,24 +65,23 @@ uvicorn app.main:app --reload --port 8000
 super-trading/
 ├── frontend/   Next.js application (routes, components, data, hooks, lib, types)
 ├── backend/    FastAPI placeholder (health check and structure only)
-└── docs/       project-plan.md — scope, phases, design system, open questions
+└── docs/       project-plan.md — scope, phases, design system, roadmap, open questions
 ```
 
 ## Honesty rules this build follows
 
-- Market prices, candles, ranges, and changes are generated locally and are
-  never presented as live quotes.
-- Chat participants and messages are fictional; nothing is transmitted.
-- The contact form validates in the browser and clearly states that nothing is
-  emailed or stored.
-- A banner on every page and a disclaimer on `/about` repeat these limits.
+- Market prices, candles, ranges, and changes are generated locally from a fixed
+  seed and are never presented as live quotes.
+- Chat participants, messages, and replies are invented; sending is simulated in
+  the browser and nothing is transmitted.
+- The contact form validates locally and says that nothing is emailed or stored.
+- `/about` states these limits in full; the footer repeats the market-data note.
 
 ## What is not included yet
 
-Live market data, user accounts, persistent chat, WebSockets, payments,
-trading execution, a production database, and real email delivery. See
-[`docs/project-plan.md`](docs/project-plan.md) for the full scope and phase 7
-plan.
+Live market data, user accounts, persistent chat, WebSockets, payments, trading
+execution, a production database, and real email delivery. The phase plan and
+roadmap live in [`docs/project-plan.md`](docs/project-plan.md).
 
 ## Scripts
 

@@ -7,7 +7,11 @@ interface SparklineProps {
   className?: string;
 }
 
-const STROKE = { up: "#22d46b", down: "#ef4b53", flat: "#71808f" } as const;
+const STROKE = {
+  up: "var(--color-signal-400)",
+  down: "var(--color-loss-400)",
+  flat: "var(--color-mist-500)",
+} as const;
 
 /** Tiny non-interactive trend line. Purely decorative, hidden from a11y tree. */
 export function Sparkline({ values, id, className }: SparklineProps) {

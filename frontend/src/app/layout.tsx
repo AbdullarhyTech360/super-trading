@@ -1,23 +1,31 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 import "./globals.css";
-import { DemoNotice } from "@/components/layout/DemoNotice";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const SITE_NAME = "Super Trading System";
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+const SITE_NAME = "Super Trading";
 const SITE_DESCRIPTION =
-  "A dark trading-terminal experience for forex traders: demo market overview, candlestick charts, company information, and a contact form. All market data is simulated.";
+  "A forex workspace for reading the session: pair overviews, an inspectable candlestick chart, company background, and a direct line to the desk.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://super-trading.com"),
@@ -32,7 +40,7 @@ export const metadata: Metadata = {
     "trading terminal",
     "candlestick chart",
     "market overview",
-    "demo",
+    "currency pairs",
   ],
   openGraph: {
     type: "website",
@@ -53,9 +61,18 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#04070a",
-  colorScheme: "dark",
+  /* Single value; the script below and ThemeToggle rewrite it when the chosen
+     theme differs from the operating-system preference. */
+  themeColor: "#0a0908",
+  colorScheme: "dark light",
 };
+
+/**
+ * Applies the stored (or system) theme before first paint so the page never
+ * flashes the wrong palette, and keeps the browser chrome colour in step with
+ * it. Kept inline and tiny on purpose.
+ */
+const THEME_SCRIPT = `(function(){var C={dark:"#0a0908",light:"#f6f3ec"};try{var s=localStorage.getItem("sts-theme");var t=s==="light"||s==="dark"?s:(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");document.documentElement.dataset.theme=t;var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("content",C[t]);}catch(e){document.documentElement.dataset.theme="dark";}})();`;
 
 export default function RootLayout({
   children,
@@ -63,17 +80,19 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full`}
+      data-theme="dark"
+      suppressHydrationWarning
+      className={`${fraunces.variable} ${instrumentSans.variable} ${plexMono.variable} h-full`}
       data-scroll-behavior="smooth"
     >
       <body className="flex min-h-dvh flex-col antialiased">
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <a
           href="#main-content"
-          className="sr-only rounded-md bg-signal-500 px-3 py-2 text-sm font-semibold text-terminal-950 focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
+          className="sr-only rounded-[2px] bg-signal-500 px-3 py-2 text-sm font-semibold text-terminal-950 focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50"
         >
           Skip to content
         </a>
-        <DemoNotice />
         <Header />
         <main id="main-content" className="flex-1">
           {children}
